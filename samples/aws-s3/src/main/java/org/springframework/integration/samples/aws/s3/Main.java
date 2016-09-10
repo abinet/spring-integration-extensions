@@ -21,7 +21,7 @@ import java.util.Scanner;
 import org.apache.log4j.Logger;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.integration.MessageChannel;
+import org.springframework.messaging.MessageChannel;
 import org.springframework.integration.support.MessageBuilder;
 
 /**
@@ -87,6 +87,7 @@ public final class Main {
 
 				System.out.print("\nPlease enter the path to the file you want to upload: ");
 				filePath = scanner.nextLine();
+
 
 				final MessageChannel messageChannel = context.getBean("s3channel", MessageChannel.class);
 				messageChannel.send(MessageBuilder.withPayload(new File(filePath)).build());

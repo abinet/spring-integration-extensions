@@ -16,10 +16,10 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.integration.version>2.2.1.RELEASE</spring.integration.version>
-		<spring.integration.aws.version>0.5.0.BUILD-SNAPSHOT</spring.integration.aws.version>
-		<log4j.version>1.2.17</log4j.version>
-		<junit.version>4.11</junit.version>
+		<spring.integration.version>4.2.5.RELEASE</spring.integration.version>
+		<spring.integration.aws.version>RELEASE</spring.integration.aws.version>
+		<log4j.version>RELEASE</log4j.version>
+		<junit.version>RELEASE</junit.version>
 	</properties>
 
 	<repositories>
@@ -34,7 +34,7 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.9</version>
+				<version>RELEASE</version>
 				<configuration>
 					<additionalProjectnatures>
 						<projectnature>org.springframework.ide.eclipse.core.springnature</projectnature>
@@ -49,7 +49,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.0</version>
+				<version>3.2</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
@@ -61,7 +61,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.2.1</version>
+				<version>1.4.0</version>
 				<configuration>
 					<mainClass>org.springframework.integration.samples.aws.s3.Main</mainClass>
 				</configuration>

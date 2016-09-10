@@ -13,9 +13,13 @@
 
 	<context:property-placeholder />
 
-	<bean id="credentials" class="org.springframework.integration.aws.core.BasicAWSCredentials">
-		<property name="accessKey" value="${accessKey}"/>
-		<property name="secretKey" value="${secretKey}"/>
+	<bean id="credentials" class="com.amazonaws.auth.BasicAWSCredentials">
+		<constructor-arg name="accessKey" value="${accessKey}"/>
+		<constructor-arg name="secretKey" value="${secretKey}"/>
+	</bean>
+
+	<bean id="s3" class="com.amazonaws.services.s3.AmazonS3Client">
+		<constructor-arg ref="credentials"/>
 	</bean>
 
 	<int:channel id="s3channel">
@@ -28,17 +32,21 @@
 		logger-name="org.springframework.integration.samples.aws.s3"
 		expression="'File Name: ' + payload.name + '(' + payload.length() + ')'"/>
 
+	<bean id="sessionFactory" class="org.springframework.integration.aws.support.S3SessionFactory">
+		<constructor-arg ref="s3"/>
+	</bean>
 	<beans profile="poll-s3">
-		<int-aws:s3-inbound-channel-adapter credentials-ref="credentials" local-directory="s3-local-storage"
-			temporary-suffix=".transferring"
-			bucket="${bucket}" channel="s3channel" remote-directory="${remoteDirectory}"/>
+		<int-aws:s3-inbound-channel-adapter
+				session-factory="sessionFactory"
+				local-directory="s3-local-storage" channel="s3channel" remote-directory="${remoteDirectory}"/>
 		<int-file:outbound-channel-adapter channel="s3channel" directory="target/s3-out"/>
 
 		<int:poller default="true" fixed-rate="5000"/>
 
 	</beans>
 	<beans profile="upload-to-s3">
-		<int-aws:s3-outbound-channel-adapter credentials-ref="credentials"
-			bucket="${bucket}" channel="s3channel" remote-directory="${remoteDirectory}"/>
+		<int-aws:s3-outbound-channel-adapter
+			s3="s3"
+			bucket="${bucket}" channel="s3channel" />
 	</beans>
 </beans>

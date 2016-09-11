@@ -18,8 +18,13 @@
 		<constructor-arg name="secretKey" value="${secretKey}"/>
 	</bean>
 
-	<bean id="s3" class="com.amazonaws.services.s3.AmazonS3Client">
+    <bean id="region" class="com.amazonaws.regions.Region" factory-method="getRegion">
+        <constructor-arg value="EU_CENTRAL_1"/>
+    </bean>
+
+	<bean id="s3"  class="com.amazonaws.services.s3.AmazonS3Client">
 		<constructor-arg ref="credentials"/>
+        <property name="region" ref="region"/>
 	</bean>
 
 	<int:channel id="s3channel">

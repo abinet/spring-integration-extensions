@@ -18,6 +18,7 @@ package org.springframework.integration.samples.aws.s3;
 import java.io.File;
 import java.util.Scanner;
 
+import com.amazonaws.SDKGlobalConfiguration;
 import org.apache.log4j.Logger;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -46,7 +47,8 @@ public final class Main {
 	 */
 	public static void main(final String... args) {
 
-		final Scanner scanner = new Scanner(System.in);
+        System.setProperty(SDKGlobalConfiguration.ENABLE_S3_SIGV4_SYSTEM_PROPERTY, "true");
+        final Scanner scanner = new Scanner(System.in);
 
 		if (LOGGER.isInfoEnabled()) {
 			LOGGER.info(HORIZONTAL_LINE
